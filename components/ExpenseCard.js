@@ -1,12 +1,13 @@
 import * as React from 'react'
 import { View, StyleSheet, Text } from 'react-native'
 import { LabelBadge } from './LabelBadge'
+import Colors from '../constants/Colors'
 
 export const ExpenseCard = ({ description, label, amount, date }) => (
   <View style={styles.item}>
     <View style={styles.flex}>
       <LabelBadge label={label} />
-      <Text style={{ color: '#718096' }}>{date}</Text>
+      <Text style={{ color: Colors.grey }}>{date}</Text>
     </View>
     <Text style={styles.description}>{description}</Text>
     <Text style={styles.amount}>$ {amount.toLocaleString()}</Text>

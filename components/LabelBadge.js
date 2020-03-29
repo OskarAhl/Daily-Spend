@@ -1,16 +1,18 @@
 import * as React from 'react'
 import { Text, StyleSheet } from 'react-native'
+import { labels } from '../constants/Labels'
+import Colors from '../constants/Colors'
 
 const getBackGroundForLabel = (label) => {
   switch (label) {
-    case 'Food':
-      return ['#234E52', '#B2F5EA']
-    case 'Books':
-      return ['#44337a', '#e9d8fd']
-    case 'Hobbies':
-      return ['#22543d', '#c6f6d5']
-    default:
-      return ['#153e75', '#ceedff']
+    case labels.food:
+      return [Colors.darkGreen, Colors.teal]
+    case labels.rent:
+      return [Colors.purple, Colors.pink100]
+    case labels.fun:
+      return [Colors.darkGreen500, Colors.green]
+    case labels.other:
+      return [Colors.blue, Colors.blue100]
   }
 }
 

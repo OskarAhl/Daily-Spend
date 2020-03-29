@@ -25,7 +25,7 @@ const ExpensesList = ({ getExpensesList, isExpensesLoading, expenses, filter }) 
   if (!filteredExpenses.length) {
     return (
       <View style={styles.container}>
-        <Text>No expenses found!</Text>
+        <Text>You have no current expenses 🎉</Text>
       </View>
     )
   }
@@ -47,6 +47,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: Constants.statusBarHeight,
+    padding: 20,
   },
 })
 

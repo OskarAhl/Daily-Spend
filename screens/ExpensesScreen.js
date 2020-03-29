@@ -4,6 +4,7 @@ import { AntDesign } from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import ExpensesList from '../components/ExpensesList'
 import FilterExpenses from '../components/FilterExpenses'
+import Colors from '../constants/Colors'
 
 const AddExpenseIcon = () => {
   const navigation = useNavigation()
@@ -16,7 +17,7 @@ const AddExpenseIcon = () => {
       name={'pluscircle'}
       size={50}
       style={styles.addExpenseIcon}
-      color="#ff1e56"
+      color={Colors.main}
       borderRadius={55}
     />
   )

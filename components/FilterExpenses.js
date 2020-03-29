@@ -6,10 +6,11 @@ import Constants from 'expo-constants'
 import { ExpenseCard } from './ExpenseCard'
 import { setFilter } from '../actions/expenses'
 import { labels } from '../constants/Labels'
-import { LabelBadge } from './LabelBadge'
 import { filterExpensesWithLabel } from '../helpers/expenses'
+import Colors from '../constants/Colors'
 
 const ExpensesList = ({ setFilter, expenses, filter }) => {
+  // TODO: multiple filters, filter by date
   const [filterLabel, setFilterLabel] = React.useState('')
   // Using Reselect from Redux would be a more efficient way to deal with derived state
   const filteredExpenses = filterExpensesWithLabel(expenses, filter)
@@ -35,7 +36,7 @@ const ExpensesList = ({ setFilter, expenses, filter }) => {
 
           return (
             <TouchableOpacity
-              style={{ ...styles.label, backgroundColor: isActive ? '#6435c9' : null }}
+              style={{ ...styles.label, backgroundColor: isActive ? Colors.purple100 : null }}
               key={label}
               onPress={() => handleFilterLabel(label)}
             >

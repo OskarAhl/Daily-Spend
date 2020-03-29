@@ -1,5 +1,6 @@
 export const labels = Object.freeze({
   food: 'Food',
-  books: 'Books',
-  hobbies: 'Hobbies',
+  rent: 'Rent',
+  fun: 'Fun',
+  other: 'Other',
 })

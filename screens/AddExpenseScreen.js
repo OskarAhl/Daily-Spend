@@ -8,22 +8,32 @@ import DateTimePicker from '@react-native-community/datetimepicker'
 import { connect } from 'react-redux'
 import { useNavigation } from '@react-navigation/native'
 import { addExpense, resetAddExpenseStatus } from '../actions/expenses'
+import { labels } from '../constants/Labels'
+import Colors from '../constants/Colors'
 
 function AddExpensesScreen({ addExpense, addExpenseStatus, resetAddExpenseStatus }) {
   // TODO: use Formik
   // validate fields
   // show fields error/success
-  // handle dates properly
+  // handle dates properly with moment
 
-  const [description, setDescription] = React.useState('Test')
-  const [amount, setAmount] = React.useState('55')
+  const [description, setDescription] = React.useState('')
+  const [amount, setAmount] = React.useState('')
   const [checked, setChecked] = React.useState('Food')
   const [date, setDate] = React.useState(new Date())
 
   const navigation = useNavigation()
 
   const submitForm = () => {
-    addExpense({ id: Date.now().toString(), description, amount: +amount, label: checked, date: '15/23/2018' })
+    if (!amount || !description || !date) return
+
+    addExpense({
+      id: Date.now().toString(),
+      description,
+      amount: +amount,
+      label: checked,
+      date: date.toLocaleString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' }),
+    })
   }
 
   React.useEffect(() => {
@@ -36,24 +46,15 @@ function AddExpensesScreen({ addExpense, addExpenseStatus, resetAddExpenseStatus
   return (
     <View style={styles.container}>
       <ScrollView contentContainerStyle={{ padding: 20 }}>
-        <Text style={styles.formHeader}>Description</Text>
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          onChangeText={setDescription}
-          value={description}
-        />
-        <Text style={styles.formHeader}>Amount</Text>
-        <TextInput
-          style={{ height: 40, borderColor: 'gray', borderWidth: 1 }}
-          keyboardType="number-pad"
-          onChangeText={setAmount}
-          value={amount}
-        />
+        <Text style={{ ...styles.formHeader, paddingBottom: 15 }}>Description</Text>
+        <TextInput style={styles.textInput} onChangeText={setDescription} value={description} />
+        <Text style={{ ...styles.formHeader, paddingBottom: 15 }}>($) Amount</Text>
+        <TextInput style={styles.textInput} keyboardType="number-pad" onChangeText={setAmount} value={amount} />
         <Text style={styles.formHeader}>Category</Text>
         <RadioButton.Group onValueChange={(value) => setChecked(value)} value={checked}>
-          <RadioButton.Item label="Food" value="Food" />
-          <RadioButton.Item label="Books" value="Books" />
-          <RadioButton.Item label="Hobbies" value="Hobbies" />
+          {Object.values(labels).map((label) => (
+            <RadioButton.Item label={label} value={label} key={label} />
+          ))}
         </RadioButton.Group>
         <Text style={styles.formHeader}>Date</Text>
         <DateTimePicker
@@ -67,7 +68,7 @@ function AddExpensesScreen({ addExpense, addExpenseStatus, resetAddExpenseStatus
         />
       </ScrollView>
       <View style={{ padding: 20 }}>
-        <Button loading={addExpenseStatus === 'loading'} mode="contained" color="#ff1e56" onPress={submitForm}>
+        <Button loading={addExpenseStatus === 'loading'} mode="contained" color={Colors.main} onPress={submitForm}>
           Add expense
         </Button>
       </View>
@@ -79,12 +80,19 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
-    backgroundColor: '#fafafa',
+    backgroundColor: '#fff',
   },
   formHeader: {
     marginTop: 20,
     fontSize: 18,
     fontWeight: 'bold',
+  },
+  textInput: {
+    height: 40,
+    borderRadius: 5,
+    borderColor: 'gray',
+    borderWidth: 1,
+    paddingLeft: 10,
   },
 })
 
