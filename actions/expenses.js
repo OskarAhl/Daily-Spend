@@ -26,3 +26,8 @@ export const getExpensesRequestSuccess = (expenseResponse) => {
 export const resetAddExpenseStatus = () => ({
   type: 'RESET_ADD_EXPENSE_STATUS',
 })
+
+export const setFilter = (label) => ({
+  type: 'SET_FILTER',
+  label,
+})

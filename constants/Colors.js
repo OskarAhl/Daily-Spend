@@ -1,6 +1,6 @@
 const tintColor = '#000'
 
-export default {
+export default Object.freeze({
   tintColor,
   tabIconDefault: '#ccc',
   tabIconSelected: tintColor,
@@ -11,4 +11,4 @@ export default {
   warningText: '#666804',
   noticeBackground: tintColor,
   noticeText: '#fff',
-}
+})

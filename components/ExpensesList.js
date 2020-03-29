@@ -5,18 +5,35 @@ import { connect } from 'react-redux'
 import Constants from 'expo-constants'
 import { ExpenseCard } from './ExpenseCard'
 import { getExpenses } from '../actions/expenses'
+import { filterExpensesWithLabel } from '../helpers/expenses'
 
-const ExpensesList = ({ expenses, getExpensesList, isExpensesLoading }) => {
+const ExpensesList = ({ getExpensesList, isExpensesLoading, expenses, filter }) => {
   React.useEffect(() => {
     getExpensesList()
   }, [])
 
-  if (isExpensesLoading) return <Text>Loading...</Text>
+  if (isExpensesLoading) {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    )
+  }
+
+  // Using Reselect from Redux would be a more efficient way to deal with derived state
+  const filteredExpenses = filterExpensesWithLabel(expenses, filter)
+  if (!filteredExpenses.length) {
+    return (
+      <View style={styles.container}>
+        <Text>No expenses found!</Text>
+      </View>
+    )
+  }
 
   return (
     <SafeAreaView style={styles.container}>
       <FlatList
-        data={expenses}
+        data={filteredExpenses}
         renderItem={({ item }) => (
           <ExpenseCard description={item.description} label={item.label} amount={item.amount} date={item.date} />
         )}
@@ -34,6 +51,7 @@ const styles = StyleSheet.create({
 })
 
 const mapStateToProps = (state) => ({
+  filter: state.filter,
   expenses: state.expenses,
   isExpensesLoading: state.isExpensesLoading,
 })

@@ -4,6 +4,7 @@ const initialState = {
   addExpenseStatus: '',
   error: false,
   expenses: [],
+  filter: '',
 }
 
 export default function expenseReducer(state = initialState, action) {
@@ -18,8 +19,9 @@ export default function expenseReducer(state = initialState, action) {
     case 'REQUEST_ADD_EXPENSE_SUCCEEDED':
       return { ...state, addExpenseStatus: 'success', expenses: [...state.expenses, action.expenseResponse] }
     case 'RESET_ADD_EXPENSE_STATUS':
-      console.log('RESET_ADD_EXPENSE_STATUS')
       return { ...state, addExpenseStatus: '' }
+    case 'SET_FILTER':
+      return { ...state, filter: action.label }
     default:
       return state
   }

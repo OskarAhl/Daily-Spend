@@ -2,7 +2,6 @@ import * as React from 'react'
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import TabBarIcon from '../components/TabBarIcon'
 import ExpensesScreen from '../screens/ExpensesScreen'
-import LinksScreen from '../screens/LinksScreen'
 
 const BottomTab = createBottomTabNavigator()
 const INITIAL_ROUTE_NAME = 'Expenses'
@@ -20,14 +19,6 @@ export default function BottomTabNavigator({ navigation, route }) {
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="ios-cash" />,
         }}
       />
-      <BottomTab.Screen
-        name="Links"
-        component={LinksScreen}
-        options={{
-          title: 'Resources',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
-        }}
-      />
     </BottomTab.Navigator>
   )
 }
@@ -38,7 +29,5 @@ function getHeaderTitle(route) {
   switch (routeName) {
     case 'Expenses':
       return 'Your spending'
-    case 'Links':
-      return 'Links to learn more'
   }
 }
