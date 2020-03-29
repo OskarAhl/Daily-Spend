@@ -5,12 +5,21 @@ import * as Font from 'expo-font'
 import { Ionicons } from '@expo/vector-icons'
 import { NavigationContainer } from '@react-navigation/native'
 import { createStackNavigator } from '@react-navigation/stack'
+import { createStore, applyMiddleware } from 'redux'
+import { Provider } from 'react-redux'
+import createSagaMiddleware from 'redux-saga'
 
 import BottomTabNavigator from './navigation/BottomTabNavigator'
 import AddExpenseScreen from './screens/AddExpenseScreen'
 import useLinking from './navigation/useLinking'
+import expenseReducer from './reducers/expense-reducer'
+import saga from './saga/sagas'
 
 const Stack = createStackNavigator()
+
+const sagaMiddleware = createSagaMiddleware()
+const expenseStore = createStore(expenseReducer, applyMiddleware(sagaMiddleware))
+sagaMiddleware.run(saga)
 
 export default function App(props) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false)
@@ -48,15 +57,17 @@ export default function App(props) {
     return null
   } else {
     return (
-      <View style={styles.container}>
-        {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
-        <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
-          <Stack.Navigator>
-            <Stack.Screen name="Root" component={BottomTabNavigator} />
-            <Stack.Screen name="Add expense" component={AddExpenseScreen} />
-          </Stack.Navigator>
-        </NavigationContainer>
-      </View>
+      <Provider store={expenseStore}>
+        <View style={styles.container}>
+          {Platform.OS === 'ios' && <StatusBar barStyle="default" />}
+          <NavigationContainer ref={containerRef} initialState={initialNavigationState}>
+            <Stack.Navigator>
+              <Stack.Screen name="Root" component={BottomTabNavigator} />
+              <Stack.Screen name="Add expense" component={AddExpenseScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+        </View>
+      </Provider>
     )
   }
 }

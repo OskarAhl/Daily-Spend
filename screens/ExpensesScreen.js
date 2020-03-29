@@ -1,8 +1,9 @@
 import * as React from 'react'
 import { StyleSheet, View } from 'react-native'
 import { AntDesign } from '@expo/vector-icons'
-import { ExpensesList } from '../components/ExpensesList'
 import { useNavigation } from '@react-navigation/native'
+import ExpensesList from '../components/ExpensesList'
+import FilterExpenses from '../components/FilterExpenses'
 
 const AddExpenseIcon = () => {
   const navigation = useNavigation()
@@ -24,6 +25,7 @@ const AddExpenseIcon = () => {
 export default function ExpensesScreen() {
   return (
     <View style={styles.container}>
+      <FilterExpenses />
       <ExpensesList />
       <AddExpenseIcon />
     </View>
